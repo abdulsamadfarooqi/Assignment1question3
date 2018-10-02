@@ -44,7 +44,8 @@ public class RegisterActivity extends AppCompatActivity {
         pwd = Password.getText().toString();
         cpwd = CPassword.getText().toString();
 
-        //------------------------------ EMPTY FIELDS ----------------------------//
+
+        
         if( firstN.isEmpty() )
         {
             validate = false;
@@ -80,7 +81,6 @@ public class RegisterActivity extends AppCompatActivity {
         } else
             CPassword.setError( null );
 
-        //------------------------------ WRONG FIELDS ----------------------------//
 
         if( !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() )
         {
