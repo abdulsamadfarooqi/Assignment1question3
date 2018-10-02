@@ -27,7 +27,7 @@
         android:hint="Last Name" />
 
     <EditText
-        android:id="@+id/Email"
+        android:id="@+id/EMAIL"
         android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
@@ -37,12 +37,11 @@
 
 
     <EditText
-        android:id="@+id/Password"
+        android:id="@+id/PASSWORD"
         android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/FName"
-
         android:layout_marginTop="230dp"
         android:hint="Enter Password" />
 
@@ -52,8 +51,7 @@
         android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_alignStart="@+id/FName"
-        android:layout_below="@id/Password"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/PASSWORD"
         android:hint="Confirm Password" />
 
 
@@ -66,7 +64,8 @@
         android:layout_marginBottom="106dp"
         android:background="@drawable/register"
         android:text="CONFIRM"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:onClick="registerNow"/>
 
 
 

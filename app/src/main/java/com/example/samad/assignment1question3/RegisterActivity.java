@@ -1,106 +1,108 @@
 package com.example.samad.assignment1question3;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    EditText Fname,Lname,Email,Password,CPassword;
+    private String firstN,lastN, email, pwd, cpwd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        final EditText FName,LName,Email,Password,CPassword;             //Declaration of items
-        FName=findViewById(R.id.FName);
+        Fname = (EditText) findViewById(R.id.FName);
+        Lname = (EditText) findViewById(R.id.LName);
+        Email = (EditText) findViewById(R.id.EMAIL);
+        Password = (EditText) findViewById(R.id.PASSWORD);
+        CPassword = (EditText) findViewById(R.id.confirmPassword);
+    }
 
-        LName=findViewById(R.id.LName);//relating items with corresponding id
+    public void registerNow(View view) {
+        if( validateFields() ){
+            Toast.makeText(this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        }
+    }
 
-        Email=findViewById(R.id.Email);
+    private boolean validateFields() {
+        boolean validate = true;
 
-        Password=findViewById(R.id.Password);
+        firstN = Lname.getText().toString();
+        lastN = Lname.getText().toString();
+        email = Email.getText().toString();
+        pwd = Password.getText().toString();
+        cpwd = CPassword.getText().toString();
 
-        CPassword=findViewById(R.id.confirmPassword);
+        //------------------------------ EMPTY FIELDS ----------------------------//
+        if( firstN.isEmpty() )
+        {
+            validate = false;
+            Fname.setError( "Required Field!" );
+        }else
+            Fname.setError( null );
 
+        if( lastN.isEmpty() )
+        {
+            validate = false;
+            Lname.setError( "Required Field!" );
+        }else
+            Lname.setError( null );
 
-        final String fname,lname,email,password,cpassword;            // Declaration of strings
-        fname=FName.getText().toString();
-        lname=LName.getText().toString();
-        email=Email.getText().toString();                             //getting text from items into string
-        password=Password.getText().toString();
-        cpassword=CPassword.getText().toString();
+        if( email.isEmpty() )
+        {
+            validate = false;
+            Email.setError( "Required Field!" );
+        }else
+            Email.setError( null );
 
+        if( pwd.isEmpty() )
+        {
+            validate = false;
+            Password.setError( "Required Field!" );
+        }else
+            Password.setError( null );
 
+        if( cpwd.isEmpty() )
+        {
+            validate = false;
+            CPassword.setError( "Required Field!" );
+        } else
+            CPassword.setError( null );
 
-        FName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (FName.getText().length()<1){
-                    FName.setError("Cannot Leave Empty ");
-                }
-            }
-        });
-        LName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (FName.getText().length()<1){
-                    FName.setError("Cannot Leave Empty ");
-                }
-            }
-        });
-        Email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (FName.getText().length()<1){
-                    FName.setError("Cannot Leave Empty ");
-                }
-            }
-        });
-        Password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (FName.getText().length()<1){
-                    FName.setError("Cannot Leave Empty ");
-                }
-            }
-        });
-        CPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (FName.getText().length()<1){
-                    FName.setError("Cannot Leave Empty ");
-                }
-            }
-        });
+        //------------------------------ WRONG FIELDS ----------------------------//
 
+        if( !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() )
+        {
+            validate = false;
+            Email.setError( "Please enter valid Email!!" );
+        } else
+            Email.setError( null );
 
+        if(pwd.length() <= 4){
+            validate = false;
+            Password.setError( "Atleast 5 digits!" );
 
-        Button btnConfirm;
-        btnConfirm=findViewById(R.id.Confirm);                        //Action listener on a button
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        } else
+            Password.setError( null );
 
-                    if(Password.equals(CPassword)) {
+        if (!cpwd.matches(pwd)){
+            validate = false;
+            CPassword.setError( "Passwords do not match" );
+        }else
+            CPassword.setError( null );
 
-                        Toast toast = Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_SHORT);
-                        toast.show();
-                        Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                    }
-                    else {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Not Registered", Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-
-            }
-        });
-
-
-
+        return validate;
     }
 }
+
